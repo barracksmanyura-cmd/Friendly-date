@@ -1,1 +1,246 @@
-# Friendly-date
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Message for Precious Jennifer</title><style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#ffd6e7,#fff5f8);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    overflow-x: hidden;
+}
+
+.card{
+    background:white;
+    width:90%;
+    max-width:650px;
+    padding:35px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+    transition: all 0.3s ease;
+}
+
+h1{
+    color:#ff4f87;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    min-height: 120px;
+}
+
+button{
+    border:none;
+    padding:14px 24px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:16px;
+    transition:.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.primary{
+    background:#ff4f87;
+    color:white;
+}
+
+.secondary{
+    background:#ececec;
+    color: #4b5563;
+}
+
+table{
+    width:100%;
+    margin-top:20px;
+    border-collapse:collapse;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
+
+.hidden{
+    display:none;
+}
+
+input[type="date"], input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: 2px solid #ffd6e7;
+    border-radius: 12px;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+}
+input:focus {
+    border-color: #ff4f87;
+}
+label {
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #4b5563;
+}
+</style></head><body><div class="card"><div id="page1">
+<h1>💌 A Message for Precious Jennifer</h1><p>
+Hello, Precious Jennifer.
+</p><p>
+You have been selected to participate in a highly important experiment.
+</p><p>
+The purpose of this experiment is to determine whether conversations are better through a screen or in real life.
+</p><p>
+Your participation would be greatly appreciated.
+</p><button class="primary" onclick="next(2)">Continue ➡️</button>
+
+</div><div id="page2" class="hidden"><h1>🕵️ Mission Briefing</h1><p><strong>Objective:</strong></p><p>• Have a pleasant afternoon</p>
+<p>• Exchange interesting stories</p>
+<p>• Confirm whether real-life conversations are superior</p><br><p><strong>Reward:</strong></p><p>• Good company</p>
+<p>• Good stories</p>
+<p>• Potentially ice cream 🍦</p><p><strong>Risk Level:</strong> Minimal 😌</p><button class="primary" onclick="startLoading()">Accept Mission ✅</button>
+
+</div><div id="page3" class="hidden"><h1>📊 Compatibility Analysis</h1><p id="loadingText">Analyzing candidate... 0%</p></div>
+
+<div id="page4" class="hidden"><h1>🤔 Final Question</h1><p>
+Would you be interested in joining me for a friendly hangout sometime after church next Sunday (or whenever you're free)?
+</p>
+<div class="button-container">
+    <button class="primary" id="yesBtn" onclick="showScheduler()">
+    💖 Yes, I'd like that
+    </button><button class="secondary" id="timingBtn" onclick="handleAlternativeClick('timing')">
+    🤝 Let's discuss timing
+    </button><button class="secondary" id="unsureBtn" onclick="handleAlternativeClick('unsure')">
+    🙈 I'm not sure yet
+    </button>
+</div>
+</div>
+
+<!-- NEW STAGE: THE DATE SELECTOR -->
+<div id="scheduler" class="hidden">
+    <h1>📅 Schedule the Experiment</h1>
+    <p>Let's find the absolute perfect day for your schedule.</p>
+    
+    <label for="date-picker">Pick a date:</label>
+    <input type="date" id="date-picker">
+
+    <label for="details">Any specific times or interesting ideas? 🍦</label>
+    <input type="text" id="details" placeholder="e.g. After service, afternoon coffee, or ice cream flavor picks!">
+    
+    <button class="primary" style="margin-top: 25px; width: 100%;" onclick="showFinalResult()">Confirm Date 🚀</button>
+</div>
+
+<div id="result" class="hidden"></div></div><script>
+
+let loopCount = 0;
+let yesScale = 1;
+let alternativeScale = 1;
+
+const loopPhrases = [
+    { timing: "Are you sure? ⏱️", unsure: "Think again! 🤔" },
+    { timing: "But ice cream awaits! 🍦", unsure: "99.9% match! 📊" },
+    { timing: "Negotiation failed. ❌", unsure: "Error: Pick Yes! ❤️" }
+];
+
+function next(page){
+    for(let i=1;i<=4;i++){
+        let el=document.getElementById("page"+i);
+        if(el) el.classList.add("hidden");
+    }
+    document.getElementById("page"+page).classList.remove("hidden");
+}
+
+function startLoading(){
+    next(3);
+    const text=document.getElementById("loadingText");
+    const values=[12,37,64,89,100];
+    let i=0;
+    const timer=setInterval(()=>{
+        text.innerHTML="Analyzing candidate... "+values[i]+"%";
+        i++;
+        if(i===values.length){
+            clearInterval(timer);
+            setTimeout(()=>{
+                document.getElementById("page3").innerHTML=`
+                <h1>📊 Results</h1>
+                <table>
+                <tr><td>Storytelling</td><td>98%</td></tr>
+                <tr><td>Sense of Humor</td><td>95%</td></tr>
+                <tr><td>Pleasant Company</td><td>100%</td></tr>
+                <tr><td>Hangout Potential</td><td>99.9%</td></tr>
+                </table>
+                <p style="margin-top:20px;">
+                Conclusion:<br><br>
+                Precious Jennifer is highly qualified for one (1) friendly outing.
+                </p>
+                <button class="primary" onclick="next(4)">
+                Continue
+                </button>
+                `;
+            },1000);
+        }
+    },700);
+}
+
+function handleAlternativeClick(type) {
+    const yesBtn = document.getElementById('yesBtn');
+    const timingBtn = document.getElementById('timingBtn');
+    const unsureBtn = document.getElementById('unsureBtn');
+
+    if (loopCount < loopPhrases.length) {
+        timingBtn.innerText = loopPhrases[loopCount].timing;
+        unsureBtn.innerText = loopPhrases[loopCount].unsure;
+        loopCount++;
+    } else {
+        timingBtn.style.display = 'none';
+        unsureBtn.style.display = 'none';
+    }
+
+    // Make the Yes button massive
+    yesScale += 0.4;
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    // Shrink alternative options
+    alternativeScale -= 0.15;
+    if (alternativeScale < 0.4) {
+        timingBtn.style.display = 'none';
+        unsureBtn.style.display = 'none';
+    } else {
+        if(timingBtn.style.display !== 'none') timingBtn.style.transform = `scale(${alternativeScale})`;
+        if(unsureBtn.style.display !== 'none') unsureBtn.style.transform = `scale(${alternativeScale})`;
+    }
+}
+
+function showScheduler() {
+    document.getElementById("page4").classList.add("hidden");
+    document.getElementById("scheduler").classList.remove("hidden");
+    
+    // Locks the date choice to today or the future
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date-picker').setAttribute('min', today);
+}
+
+function showFinalResult(){
+    document.getElementById("scheduler").classList.add("hidden");
+    const result=document.getElementById("result");
+    result.classList.remove("hidden");
+
+    result.innerHTML=`
+    <h1>🎉 Mission Accepted!</h1>
+    <p>Your application and schedule preferences have been officially locked in.</p>
+    <p>Further coordination protocols will be initiated through standard chat channels.</p>
+    <p>Looking forward to testing the real-life conversation hypothesis with you, Precious Jennifer! 😌</p>
+    `;
+}
+</script></body>
+</html>
