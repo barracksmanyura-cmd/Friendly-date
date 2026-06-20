@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Invitation</title>
+    <style>
+        body {
+            background-color: #fdf2f8;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+        }
+        h1 { color: #db2777; }
+        p { color: #4b5563; line-height: 1.6; }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        .btn-yes { background-color: #db2777; color: white; }
+        .btn-no { background-color: #e5e7eb; color: #4b5563; }
+        button:hover { opacity: 0.9; }
+        .hidden { display: none; }
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="invite-box">
+        <h1>Hi there! ✨</h1>
+        <p>I've really enjoyed our conversations lately and would love to get to know you better. Would you be interested in going on a date sometime?</p>
+        <div class="buttons">
+            <button class="btn-yes" onclick="showScheduler()">I'd love to!</button>
+            <button class="btn-no" onclick="showResponse('no')">Maybe another time</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="scheduler">
+        <h1>Great! 😊</h1>
+        <p>Let's find a time that works for you. When are you usually free?</p>
+        <input type="text" id="details" placeholder="e.g., Saturday afternoon or Friday for coffee">
+        <button class="btn-yes" style="margin-top: 1rem; width: 100%;" onclick="showResponse('yes')">Send Suggestion</button>
+    </div>
+
+    <div class="container hidden" id="final-message">
+        <h1 id="final-title"></h1>
+        <p id="final-text"></p>
+    </div>
+
+    <script>
+        function showScheduler() {
+            document.getElementById('invite-box').classList.add('hidden');
+            document.getElementById('scheduler').classList.remove('hidden');
+        }
+
+        function showResponse(type) {
+            document.getElementById('invite-box').classList.add('hidden');
+            document.getElementById('scheduler').classList.add('hidden');
+            const finalBox = document.getElementById('final-message');
+            finalBox.classList.remove('hidden');
+            
+            if(type === 'yes') {
+                document.getElementById('final-title').innerText = "Awesome!";
+                document.getElementById('final-text').innerText = "I'll reach out soon so we can finalize the plans. Looking forward to it!";
+            } else {
+                document.getElementById('final-title').innerText = "No worries!";
+                document.getElementById('final-text').innerText = "I appreciate your honesty. I'm glad we can keep things friendly!";
+            }
+        }
+    </script>
+</body>
+</html>
