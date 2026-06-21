@@ -113,7 +113,7 @@ Your participation would be greatly appreciated.
 </div><div id="page3" class="hidden"><h1>📊 Compatibility Analysis</h1><p id="loadingText">Analyzing candidate... 0%</p></div>
 
 <div id="page4" class="hidden"><h1>🤔 Final Question</h1><p>
-Would you be interested in joining me for a friendly hangout sometime after church next Sunday (or whenever you're free)?
+Would you be interested in joining me for a friendly hangout sometime this week? (or whenever you're free)?
 </p>
 <div class="button-container">
     <button class="primary" id="yesBtn" onclick="showScheduler()">
@@ -135,7 +135,7 @@ Would you be interested in joining me for a friendly hangout sometime after chur
     <input type="date" id="date-picker">
 
     <label for="details">Any specific times or interesting ideas? 🍦</label>
-    <input type="text" id="details" placeholder="e.g. After service, afternoon coffee, or ice cream flavor picks!">
+    <input type="text" id="details" placeholder="e.g. Afternoon walk!">
     
     <button class="primary" style="margin-top: 25px; width: 100%;" onclick="showFinalResult()">Confirm Date 🚀</button>
 </div>
